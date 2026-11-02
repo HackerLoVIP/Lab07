@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Báo Cáo Thực Hành Lab 07 - Kiểm Thử API Bằng Postman</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 15mm;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #24292e;
+    line-height: 1.6;
+    font-size: 13.5px;
+    background: #fff;
+    margin: 0;
+    padding: 20px 28px;
+  }
+  .header-box {
+    border-bottom: 3px solid #ff6c37;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .header-box h1 {
+    font-size: 21px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+  }
+  .header-box h2 {
+    font-size: 15px;
+    color: #ff6c37;
+    font-weight: 600;
+    margin: 0;
+  }
+  .student-card {
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-left: 5px solid #ff6c37;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .student-card .info-item {
+    font-size: 13.5px;
+  }
+  .student-card .info-item strong {
+    color: #333;
+  }
+  h3 {
+    font-size: 15.5px;
+    color: #1f2937;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 5px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 14px;
+    color: #ea580c;
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+  p, ul, ol {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  ul, ol {
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 3px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 13px;
+  }
+  table th, table td {
+    border: 1px solid #d1d5db;
+    padding: 7px 10px;
+    text-align: left;
+  }
+  table th {
+    background: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+  }
+  table tr:nth-child(even) {
+    background: #f9fafb;
+  }
+  .badge-pass {
+    background: #d1fae5;
+    color: #065f46;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .badge-get {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .badge-post {
+    background: #fef3c7;
+    color: #b45309;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .img-box {
+    text-align: center;
+    margin: 12px 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #1e1e1e;
+    page-break-inside: avoid;
+  }
+  .img-box img {
+    width: 100%;
+    max-height: 460px;
+    object-fit: contain;
+    display: block;
+  }
+  .img-caption {
+    background: #f8fafc;
+    color: #4b5563;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-top: 1px solid #e5e7eb;
+    font-style: italic;
+  }
+  code {
+    background: #f1f5f9;
+    color: #dc2626;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 12.5px;
+  }
+  pre {
+    background: #1e293b;
+    color: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    overflow-x: auto;
+  }
+  .qa-block {
+    background: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .qa-q {
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 3px;
+  }
+  .qa-a {
+    color: #334155;
+    margin: 0;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+</style>
+</head>
+<body>
+
+<div class="header-box">
+  <h1>BÁO CÁO THỰC HÀNH LAB 07</h1>
+  <h2>KIỂM THỬ API CƠ BẢN BẰNG POSTMAN</h2>
+</div>
+
+<div class="student-card">
+  <div class="info-item"><strong>Họ và tên:</strong> Lê Trọng Hiệu</div>
+  <div class="info-item"><strong>Mã số sinh viên (MSSV):</strong> 231A290152</div>
+  <div class="info-item"><strong>Học phần:</strong> Công Nghệ Phần Mềm</div>
+</div>
+
+<h3>1. MỤC TIÊU BÀI THỰC HÀNH</h3>
+<ul>
+  <li>Tạo một Collection trong Postman để quản lý các request kiểm thử API của dịch vụ JSONPlaceholder.</li>
+  <li>Khai báo và sử dụng biến dùng chung <code>baseUrl</code> để không phải gõ lại địa chỉ server nhiều lần.</li>
+  <li>Thực hành gửi các request GET và POST, biết cách cấu hình tham số Params, Header và Body JSON.</li>
+  <li>Viết các đoạn test script đơn giản bằng JavaScript trong Postman để tự động kiểm tra mã trạng thái status code và dữ liệu JSON trả về.</li>
+  <li>Quan sát và ghi nhận các thông tin phản hồi như: Status code, Response time (thời gian phản hồi), dung lượng response và nội dung dữ liệu trả về.</li>
+</ul>
+
+<h3>2. HƯỚNG DẪN TẠO COLLECTION VÀ BIẾN DÙNG CHUNG</h3>
+<ul>
+  <li>Mở Postman, tạo một Collection mới đặt tên là: <code>jsonplaceholder-postman-lab</code>.</li>
+  <li>Trong mục Variables của Collection, em tạo một biến dùng chung:
+    <ul>
+      <li>Tên biến: <code>baseUrl</code></li>
+      <li>Giá trị: <code>https://jsonplaceholder.typicode.com</code></li>
+    </ul>
+  </li>
+  <li>Khi cấu hình các request bên dưới, chỉ cần gọi URL theo mẫu <code>{{baseUrl}}/endpoint</code>.</li>
+  <li>Tổ chức các request gồm: <code>GET Posts List</code>, <code>GET Single Post</code>, <code>GET Comments By PostId</code>, <code>POST Create New Post</code> và <code>GET Users List</code>.</li>
+</ul>
+
+<h3>3. QUÁ TRÌNH THỰC HIỆN VÀ KẾT QUẢ TỪNG BÀI</h3>
+
+<h4>3.1. Bài 1: Kiểm thử API danh sách (GET /posts)</h4>
+<p><strong>Cấu hình:</strong> Name: <code>GET Posts List</code> | Method: <code>GET</code> | URL: <code>{{baseUrl}}/posts</code></p>
+<p><strong>Test script:</strong> Kiểm tra status 200, kiểm tra dữ liệu là mảng JSON, có đủ 100 bài post, kiểm tra trường <code>id</code> và <code>title</code>.</p>
+<p><strong>Kết quả chạy thử 5 lần:</strong></p>
+<ul>
+  <li>Lần 1: 368 ms | 27,520 bytes (27.52 KB) | Status 200 OK</li>
+  <li>Lần 2: 169 ms | 27,520 bytes | Status 200 OK</li>
+  <li>Lần 3: 102 ms | 27,520 bytes | Status 200 OK</li>
+  <li>Lần 4: 90 ms | 27,520 bytes | Status 200 OK</li>
+  <li>Lần 5: 106 ms | 27,520 bytes | Status 200 OK</li>
+  <li>Thời gian phản hồi trung bình: khoảng <strong>167 ms</strong>.</li>
+</ul>
+
+<div class="qa-block">
+  <div class="qa-q">Trả lời câu hỏi nhận xét mục 6.5:</div>
+  <div class="qa-a">&bull; <strong>API có trả lỗi không?</strong> Không, cả 5 lần chạy server đều trả về mã 200 OK, không có lỗi.<br>
+  &bull; <strong>Thời gian phản hồi giữa các lần gửi có ổn định không?</strong> Lần gửi đầu tiên tốn 368 ms vì máy vừa mới kết nối đến server. Từ lần thứ 2 trở đi thì tốc độ nhanh và ổn định hơn hẳn, dao động từ 90 ms đến 169 ms.<br>
+  &bull; <strong>Dữ liệu trả về có đúng định dạng mảng JSON không?</strong> Đúng, kết quả trả về là một mảng JSON chứa đúng 100 bài viết.</div>
+</div>
+
+<div class="img-box">
+  <img src="screenshots/request_1_get_posts.png" alt="GET Posts List">
+  <div class="img-caption">Hình 1: Request GET Posts List chạy thành công, Pass 4/4 tests</div>
+</div>
+
+<div class="page-break"></div>
+
+<h4>3.2. Bài 2: So sánh API danh sách và API chi tiết (GET /posts/1)</h4>
+<p><strong>Cấu hình:</strong> Name: <code>GET Single Post</code> | Method: <code>GET</code> | URL: <code>{{baseUrl}}/posts/1</code></p>
+<p><strong>Kết quả đo lường:</strong> Status code <strong>200 OK</strong> | Thời gian phản hồi trung bình: khoảng <strong>68 ms</strong> | Dung lượng: <strong>292 bytes</strong>.</p>
+
+<div class="qa-block">
+  <div class="qa-q">Trả lời câu hỏi nhận xét mục 7.5:</div>
+  <div class="qa-a">&bull; <strong>So sánh response time và kích thước:</strong> Request <code>GET /posts/1</code> chạy rất nhanh, chỉ mất khoảng 68 ms (nhanh hơn nhiều so với <code>GET /posts</code> là 167 ms). Dung lượng của <code>GET /posts/1</code> cũng rất nhỏ, chỉ có 292 bytes (nhẹ hơn gần 100 lần so với 27.5 KB của <code>GET /posts</code>).<br>
+  &bull; <strong>Giải thích lý do:</strong> Vì request danh sách <code>GET /posts</code> phải lấy toàn bộ 100 bài viết trong cơ sở dữ liệu nên gói dữ liệu gửi về rất lớn và tốn thời gian tải hơn. Còn request chi tiết <code>GET /posts/1</code> chỉ cần lấy đúng duy nhất 1 bài viết có id = 1 nên dữ liệu rất ít, nhẹ và tải về cực kỳ nhanh.</div>
+</div>
+
+<div class="img-box">
+  <img src="screenshots/request_2_get_single_post.png" alt="GET Single Post">
+  <div class="img-caption">Hình 2: Request GET Single Post chạy thành công, Pass 4/4 tests</div>
+</div>
+
+<h4>3.3. Bài 3: Kiểm thử API có query parameter (GET /comments?postId=1)</h4>
+<p><strong>Cấu hình:</strong> Name: <code>GET Comments By PostId</code> | Method: <code>GET</code> | URL: <code>{{baseUrl}}/comments</code> | Params: Key = <code>postId</code>, Value = <code>1</code></p>
+<p><strong>Kết quả đo lường:</strong> Status code <strong>200 OK</strong> | Thời gian phản hồi trung bình: khoảng <strong>65 ms</strong> | Dung lượng: <strong>1,510 bytes</strong> (khoảng 1.5 KB), trả về đúng 5 bình luận của bài viết số 1.</p>
+
+<div class="qa-block">
+  <div class="qa-q">Trả lời câu hỏi nhận xét mục 8.5:</div>
+  <div class="qa-a">&bull; <strong>So sánh với GET /posts/1:</strong> Cả hai request đều có thời gian phản hồi rất nhanh (~65 ms). Về kích thước thì <code>GET /comments?postId=1</code> (1.5 KB) lớn hơn <code>GET /posts/1</code> (292 bytes) vì nó trả về danh sách 5 bình luận thay vì 1 bài viết.<br>
+  &bull; <strong>Vai trò của Query Parameter trong kiểm thử API:</strong> Query parameter dùng để truyền điều kiện lọc dữ liệu cho server mà không làm thay đổi đường dẫn URL. Khi kiểm thử API, việc truyền query param giúp kiểm tra xem backend có lọc đúng dữ liệu theo yêu cầu hay không (ở đây kiểm tra thấy đúng là server chỉ trả về các bình luận có <code>postId == 1</code>).</div>
+</div>
+
+<div class="img-box">
+  <img src="screenshots/request_3_get_comments_by_postid.png" alt="GET Comments By PostId">
+  <div class="img-caption">Hình 3: Request GET Comments By PostId chạy thành công, Pass 4/4 tests</div>
+</div>
+
+<div class="page-break"></div>
+
+<h4>3.4. Bài 4: Kiểm thử API tạo mới với POST (/posts)</h4>
+<p><strong>Cấu hình:</strong> Name: <code>POST Create New Post</code> | Method: <code>POST</code> | URL: <code>{{baseUrl}}/posts</code></p>
+<p><strong>Headers:</strong> <code>Content-Type: application/json</code></p>
+<p><strong>Request Body (JSON raw):</strong></p>
+<pre>{
+  "title": "Postman Lab",
+  "body": "Bai thuc hanh kiem thu API bang Postman",
+  "userId": 1
+}</pre>
+<p><strong>Kết quả thực hiện gửi 3 lần đổi tiêu đề khác nhau (mục 9.4 đề bài):</strong></p>
+<ul>
+  <li>Lần 1 (title: "Postman Lab"): Status <strong>201 Created</strong>, thời gian 389 ms, body trả về có <code>id: 101</code>.</li>
+  <li>Lần 2 (title: "Test Title 2"): Status <strong>201 Created</strong>, thời gian 347 ms, body trả về có <code>id: 101</code>.</li>
+  <li>Lần 3 (title: "Test Title 3"): Status <strong>201 Created</strong>, thời gian 328 ms, body trả về có <code>id: 101</code>.</li>
+  <li>Dung lượng response khoảng 109 - 110 bytes.</li>
+</ul>
+
+<div class="qa-block">
+  <div class="qa-q">Trả lời câu hỏi nhận xét mục 9.5:</div>
+  <div class="qa-a">&bull; <strong>API có trả về dữ liệu JSON sau khi tạo mới không?</strong> Có, server trả về dữ liệu đúng định dạng JSON.<br>
+  &bull; <strong>Trường id có xuất hiện trong response không?</strong> Có, server tự sinh thêm trường <code>id: 101</code> cho bài viết mới tạo.<br>
+  &bull; <strong>So sánh phản hồi của POST với các request GET trước đó:</strong> Khi dùng GET thì server trả về status <code>200 OK</code>, còn khi dùng POST tạo mới thành công thì server trả về status <code>201 Created</code>. Thời gian chạy của POST (~350 ms) lâu hơn so với GET đơn lẻ (~65 ms) vì server phải nhận dữ liệu body gửi lên và xử lý lưu vào cơ sở dữ liệu. Request POST có gửi kèm body dữ liệu lên server, còn các request GET thì không có body.</div>
+</div>
+
+<div class="img-box">
+  <img src="screenshots/request_4_post_create_new_post.png" alt="POST Create New Post">
+  <div class="img-caption">Hình 4: Request POST Create New Post chạy thành công, Pass 4/4 tests</div>
+</div>
+
+<h3>4. BẢNG TỔNG HỢP KẾT QUẢ KIỂM THỬ (THEO MẪU MỤC 11)</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>Method</th>
+      <th>Status code</th>
+      <th>Response time</th>
+      <th>Response size</th>
+      <th>Kết quả test script</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GET /posts</strong></td>
+      <td><span class="badge-get">GET</span></td>
+      <td>200 OK</td>
+      <td>~167 ms</td>
+      <td>27,520 bytes (27.5 KB)</td>
+      <td><span class="badge-pass">Pass (4/4 tests)</span></td>
+    </tr>
+    <tr>
+      <td><strong>GET /posts/1</strong></td>
+      <td><span class="badge-get">GET</span></td>
+      <td>200 OK</td>
+      <td>~67.6 ms</td>
+      <td>292 bytes</td>
+      <td><span class="badge-pass">Pass (4/4 tests)</span></td>
+    </tr>
+    <tr>
+      <td><strong>GET /comments?postId=1</strong></td>
+      <td><span class="badge-get">GET</span></td>
+      <td>200 OK</td>
+      <td>~64.6 ms</td>
+      <td>1,510 bytes (1.5 KB)</td>
+      <td><span class="badge-pass">Pass (4/4 tests)</span></td>
+    </tr>
+    <tr>
+      <td><strong>POST /posts</strong></td>
+      <td><span class="badge-post">POST</span></td>
+      <td>201 Created</td>
+      <td>~389.2 ms</td>
+      <td>109 bytes</td>
+      <td><span class="badge-pass">Pass (4/4 tests)</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>5. NHẬN XÉT VỀ TÍNH ĐÚNG ĐẮN CỦA API VÀ SỰ KHÁC NHAU GIỮA CÁC LOẠI REQUEST</h3>
+<ol>
+  <li><strong>Về tính đúng đắn của API:</strong> Dịch vụ JSONPlaceholder hoạt động rất tốt và chuẩn: khi lấy dữ liệu bằng GET thì trả về mã 200 OK; khi tạo mới dữ liệu bằng POST thì trả về đúng mã 201 Created kèm theo mã id mới sinh (101). Dữ liệu trả về đúng chuẩn JSON, không có request nào bị lỗi.</li>
+  <li><strong>Sự khác nhau giữa các loại request:</strong>
+    <ul>
+      <li>Request danh sách (<code>GET /posts</code>) lấy nhiều dữ liệu nên dung lượng nặng (27.5 KB) và mất nhiều thời gian tải hơn.</li>
+      <li>Request chi tiết (<code>GET /posts/1</code>) chỉ lấy đúng 1 bản ghi nên dung lượng rất nhẹ (292 bytes) và phản hồi rất nhanh.</li>
+      <li>Request có query param (<code>GET /comments?postId=1</code>) giúp lọc đúng 5 bình luận theo bài viết mong muốn.</li>
+      <li>Request POST gửi thêm dữ liệu body lên server và nhận về mã 201 Created, thời gian xử lý lâu hơn các request GET đơn lẻ.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>6. BÀI TẬP MỞ RỘNG (MỤC 12 ĐỀ BÀI)</h3>
+<ul>
+  <li>Em đã tạo thêm 1 request <code>GET /users</code> để luyện tập kiểm tra dữ liệu danh sách người dùng (kết quả trả về mảng 10 user).</li>
+  <li>Viết thêm lệnh test script kiểm tra số lượng phần tử <code>pm.expect(jsonData.length).to.eql(100)</code>.</li>
+  <li>Sử dụng tính năng <strong>Collection Runner</strong> trong Postman để chạy tự động toàn bộ collection với 5 lần lặp (5 iterations). Kết quả chạy 20 lượt request đều thành công, đạt <strong>80/80 tests Passed (100%)</strong>.</li>
+  <li>Tạo file cấu hình môi trường <code>jsonplaceholder-environment.postman_environment.json</code> để lưu biến <code>baseUrl</code>.</li>
+</ul>
+
+<div class="img-box">
+  <img src="screenshots/runner_summary.png" alt="Collection Runner">
+  <div class="img-caption">Hình 5: Minh chứng chạy tự động hóa bằng Collection Runner (80/80 Tests Passed 100%)</div>
+</div>
+
+</body>
+</html>
